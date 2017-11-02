@@ -1,4 +1,4 @@
-FROM  alpine:3.6
+FROM  alpine:latest
 LABEL maintainer=jon@jaggersoft.com
 
 RUN apk update
