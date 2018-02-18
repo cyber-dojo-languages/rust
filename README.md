@@ -2,4 +2,4 @@
 
 ![Build Status](https://travis-ci.org/cyber-dojo-languages/rust.svg?branch=master)
 
-Version=1.23
+Version=1.24
