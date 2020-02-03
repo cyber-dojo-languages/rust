@@ -1,4 +1,2 @@
-FROM alpine:latest
+FROM rust:1-alpine3.11
 LABEL maintainer=jon@jaggersoft.com
-
-RUN apk add rust
