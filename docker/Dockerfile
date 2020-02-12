@@ -12,3 +12,5 @@ RUN apk add --update coreutils bash tar file
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 LABEL maintainer=jon@jaggersoft.com
+
+RUN rustup component add rustfmt clippy
