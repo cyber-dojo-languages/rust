@@ -1,0 +1,13 @@
+
+Tried to install kcov
+No joy
+
+Tried to install tarpaulin
+RUN cargo install --force cargo-tarpaulin
+
+This installs but when you use it you get this error:
+Error: "Failed to run tests: ASLR disable failed: EPERM: Operation not permitted"
+
+https://github.com/xd009642/tarpaulin/README.md
+suggests that you need this option on docker run...
+  --security-opt seccomp=unconfined
