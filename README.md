@@ -1,4 +1,5 @@
-[![CircleCI](https://circleci.com/gh/cyber-dojo-languages/rust.svg?style=svg)](https://circleci.com/gh/cyber-dojo-languages/rust)
+[![Github Action (main)](https://github.com/cyber-dojo-languages/rust/actions/workflows/main.yml/badge.svg)](https://github.com/cyber-dojo-languages/rust/actions)
+
 
 ## image_name="cyberdojofoundation/rust"
 
