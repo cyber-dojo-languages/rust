@@ -5,6 +5,10 @@ on:
     branches:
       - master
 
+env:
+  PACKAGES_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  PACKAGES_USERNAME: ${{ secrets.PACKAGES_USERNAME }}
+
 jobs:
 
   build-publish-trigger:
