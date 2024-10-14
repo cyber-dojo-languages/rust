@@ -7,7 +7,7 @@ on:
 
 env:
   PACKAGES_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  PACKAGES_USERNAME: ${{ secrets.PACKAGES_USERNAME }}
+  PACKAGES_USERNAME: ${{ github.actor }}
 
 jobs:
 
