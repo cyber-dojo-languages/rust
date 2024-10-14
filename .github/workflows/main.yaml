@@ -4,16 +4,12 @@ on:
   push:
     branches:
       - master
-  #schedule:
-  #  - cron: '0 0 1,5,10,15,20,25 * *'
 
 jobs:
 
   build-publish-trigger:
     runs-on: ubuntu-latest
-    env:
-      DOCKER_PASSWORD: ${{ secrets.DOCKER_FOUNDATION_PASS }}
-      DOCKER_USERNAME: ${{ secrets.DOCKER_FOUNDATION_USER }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
