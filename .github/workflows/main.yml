@@ -7,6 +7,8 @@ on:
   schedule:
     - cron: '0 9 * * MON'
 
+# These environment variables are used in the image builder script used to
+# build Docker images
 env:
   PACKAGES_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   PACKAGES_USERNAME: ${{ github.actor }}
@@ -22,5 +24,5 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Build image, test it, push it dockerhub, notify dependents
+      - name: Build image, test it, push it to GHCR, notify dependents
         run: ./pipe_build_up_test.sh
