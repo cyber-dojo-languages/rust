@@ -1,4 +1,8 @@
-FROM rust:alpine3.23
+# The floating alpine tag, so a rebuild picks up the newest stable rust on
+# the newest alpine. It is published as an index holding real amd64 and arm64
+# layers, so each runner builds from binaries its own kernel can exec.
+FROM rust:alpine
 LABEL maintainer=jon@jaggersoft.com
 
-RUN rustup component add rustfmt clippy
+COPY install.sh .
+RUN ./install.sh && rm ./install.sh

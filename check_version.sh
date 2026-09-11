@@ -6,11 +6,26 @@ readonly JSON=`cat docker/image_name.json`
 [[ ${JSON} =~ ${REGEX} ]]
 readonly IMAGE_NAME="${BASH_REMATCH[1]}"
 
-readonly MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
-readonly EXPECTED="rustc 1.98"
-readonly ACTUAL=$(docker run --rm -i ${IMAGE_NAME} sh -c 'rustc --version')
+readonly MY_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-if echo "${ACTUAL}" | grep -q "${EXPECTED}"; then
+# The image records the rust its base carried in /versions.json, so the
+# expected version is read from the image rather than written down here.
+# Writing it down here would pin the image to whatever the base happened to
+# carry when someone last edited this file.
+readonly VERSIONS=$(docker run --rm -i ${IMAGE_NAME} sh -c 'cat /versions.json')
+readonly VERSION_REGEX='"rust":"([0-9.]+)"'
+if [[ ! ${VERSIONS} =~ ${VERSION_REGEX} ]]; then
+  echo "VERSION ERROR: /versions.json has no rust property"
+  echo "VERSION   FILE: ${VERSIONS}"
+  exit 42
+fi
+readonly EXPECTED="${BASH_REMATCH[1]}"
+
+# Asks the installed compiler, so the gate fails if the number recorded at
+# build time is not the rust the image can actually run.
+readonly ACTUAL=$(docker run --rm -i ${IMAGE_NAME} sh -c 'rustc --version | cut -d" " -f2')
+
+if [ "${ACTUAL}" == "${EXPECTED}" ]; then
   echo "VERSION CONFIRMED as ${EXPECTED}"
 else
   echo "VERSION EXPECTED: ${EXPECTED}"
