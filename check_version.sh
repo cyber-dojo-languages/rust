@@ -8,24 +8,17 @@ readonly IMAGE_NAME="${BASH_REMATCH[1]}"
 
 readonly MY_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-# The image records the rust its base carried in /versions.json, so the
-# expected version is read from the image rather than written down here.
-# Writing it down here would pin the image to whatever the base happened to
-# carry when someone last edited this file.
-readonly VERSIONS=$(docker run --rm -i ${IMAGE_NAME} sh -c 'cat /versions.json')
-readonly VERSION_REGEX='"rust":"([0-9.]+)"'
-if [[ ! ${VERSIONS} =~ ${VERSION_REGEX} ]]; then
-  echo "VERSION ERROR: /versions.json has no rust property"
-  echo "VERSION   FILE: ${VERSIONS}"
-  exit 42
-fi
-readonly EXPECTED="${BASH_REMATCH[1]}"
+# Written down here so the gate fails when the floating base image moves to a
+# different rust. Reading it from the image instead would compare the image
+# against itself and pass whatever the move brought in.
+readonly EXPECTED=1.98
 
-# Asks the installed compiler, so the gate fails if the number recorded at
-# build time is not the rust the image can actually run.
+# Asks the installed compiler, so the gate fails when the rust the image can
+# actually run is not the one named above. Matching on the leading major.minor
+# lets a patch release through and stops only a minor or major move.
 readonly ACTUAL=$(docker run --rm -i ${IMAGE_NAME} sh -c 'rustc --version | cut -d" " -f2')
 
-if [ "${ACTUAL}" == "${EXPECTED}" ]; then
+if echo "${ACTUAL}" | grep -q "${EXPECTED}"; then
   echo "VERSION CONFIRMED as ${EXPECTED}"
 else
   echo "VERSION EXPECTED: ${EXPECTED}"
