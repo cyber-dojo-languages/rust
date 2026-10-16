@@ -5,7 +5,7 @@
 
 rustup component add rustfmt clippy
 
-# Read by check_version.sh, so the gate states the version this image holds
+# Asked of the compiler, so /versions.json states the version this image holds
 # rather than one written down when someone last edited it. rustc --version
 # prints a sentence, of which the second word is the version.
 readonly RUST_VERSION=$(rustc --version | cut -d' ' -f2)
