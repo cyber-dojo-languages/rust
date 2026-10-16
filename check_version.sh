@@ -11,7 +11,7 @@ readonly MY_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # Written down here so the gate fails when the floating base image moves to a
 # different rust. Reading it from the image instead would compare the image
 # against itself and pass whatever the move brought in.
-readonly EXPECTED=1.98
+readonly EXPECTED=1.99
 
 # Asks the installed compiler, so the gate fails when the rust the image can
 # actually run is not the one named above. Matching on the leading major.minor

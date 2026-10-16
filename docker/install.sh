@@ -8,4 +8,13 @@ rustup component add rustfmt clippy
 # Read by check_version.sh, so the gate states the version this image holds
 # rather than one written down when someone last edited it. rustc --version
 # prints a sentence, of which the second word is the version.
-echo "{\"rust\":\"$(rustc --version | cut -d' ' -f2)\"}" > /versions.json
+readonly RUST_VERSION=$(rustc --version | cut -d' ' -f2)
+cat > /versions.json <<EOF
+{
+  "language": {
+    "name": "Rust",
+    "version": "${RUST_VERSION}"
+  },
+  "test_frameworks": []
+}
+EOF
